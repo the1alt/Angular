@@ -1,0 +1,23 @@
+{
+  "name": "angular",
+  "authors": [
+    "the1alt <thibaut.faurel@gmail.com>"
+  ],
+  "description": "",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "app/"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "angular": "^1.5.8",
+    "angularjs-slider": "^5.8.7"
+  }
+}

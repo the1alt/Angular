@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Angular</title>
+  <link rel="stylesheet" href="app/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="app/angularjs-slider/dist/rzslider.min.css" media="screen" title="no title">
+  <style media="screen">
+    .text-gold{
+      color:black;
+      background:#FFD700;
+    }
+    body{
+      background-color:rgba(28, 136, 187, 0.55);
+    }
+  </style>
+  <!--JQUERY-->
+<script src="app/jquery/dist/jquery.min.js" charset="utf-8"></script>
+  <!--BOOTSTRAP-->
+<script src="app/bootstrap/dist/js/bootstrap.min.js" charset="utf-8"></script>
+  <!--ANGULAR-->
+<script src="app/angular/angular.min.js" charset="utf-8"></script>
+  <!--ANGULAR JS SLIDER-->
+<script src="app/angularjs-slider/dist/rzslider.min.js" charset="utf-8"></script>
+  <!--Script-->
+<script src="dist/js/app.min.js" charset="utf-8"></script>
+</head>
+
+<!-- Initialisation de l'application (Module)-->
+<body ng-app="myApp" ng-cloak>
+
+  <div ng-controller="myController">
+    <div class="container">
+
+      <h3>{{ nom }} {{ prenom }}</h3>
+
+      <a style="color:white;" ng-click="modifierPrenom()">Modifie moi mon prénom et appelle le Donald</a>
+
+      <div class="row" style="padding:20px;">
+
+        <!-- ng-model est une directive qui permet d'intéragir avec des variables dans la Scope -->
+        <form>
+          <div class="form-group col-md-6">
+
+            <div class="form-group col-md-12">
+              <label for="nom">Nom :</label>
+              <input type="text" ng-model="nom" ng-blur="verifNomPrenom()" name="name" class="form-control">
+            </div>
+            <div class="form-group col-md-12">
+              <label for="prenom">Prénom :</label>
+              <input type="text" ng-model="prenom" name="firstname" class="form-control">
+            </div>
+            <div class="form-group col-md-12">
+              <label for="mail">Adresse mail :</label>
+              <input type="text" ng-model="mail" name="mail" ng-blur="checkMail()" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
+              <label for="salaire">Salaire :</label>
+              <input type="text" id="salaire" ng-keyup="[changeCouleurSalaire(), changeNetSalaire()]" ng-class="couleurSalaire" ng-model="salaire" name="salaire" class="form-control">
+            </div>
+            <div class="form-group col-md-12">
+              <label for="imposition">Imposition en % :</label>
+              <input type="text" id="imposition" ng-keyup="changeNetSalaire()" ng-model="imposition" name="name" class="form-control">
+            </div>
+            <div class="form-group col-md-12">
+              <select class="form-control" ng-change="selectImposition()" ng-model="modelImposition" id="selectImposition" style="margin:20px 0;">
+                <option>10</option>
+                <option>20</option>
+                <option>30</option>
+                <option>50</option>
+                <option>75</option>
+              </select>
+            </div>
+            <div class="form-group col-md-12">
+              <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options"></rzslider>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    <div class="row">
+
+      <div ng-if="nom.length == 0" class="text-danger">Vous devez entrer un nom</div>
+
+      <div ng-if="nom.length > 10" class="text-danger">Votre nom est trop long</div>
+
+      <div ng-if="nom === prenom" class="text-danger">Votre prénom doit être différent de votre nom</div>
+
+      <div ng-show="invalideMail" class="text-danger">Votre adresse Email est invalide</div>
+
+      <div class="alert alert-success" ng-if="nom == 'Trump' && salaire >= 1000000">Je suis président</div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div ng-click="afficheDetail()" class="btn btn-success">
+            Voir le détail
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div ng-click="formater()" class="btn btn-success">
+            Formater
+        </div>
+      </div>
+      <div class="col-md-3">
+        <label for="checkNet">Montrer le salaire net</label>
+        <input type="checkbox" id="checkNet" ng-model="montreNet">
+      </div>
+      <div class="col-md-3">
+        <label for="checkMonnaie">Mettre le salaire en franc</label>
+        <input type="checkbox" id="checkMonnaie" ng-model="monnaie" ng-true-value="'Fr'" ng-false-value="'€'" ng-change="changeMonnaie()" ng-init="checked=false">
+        <p>
+          Salaire en {{ monnaie }}
+        </p>
+      </div>
+
+
+
+
+
+    </div>
+
+
+
+
+
+      <div ng-show="jumbo" class="jumbotron">
+        <h2>{{ nom }} {{ prenom }} </h2>
+        <p>
+          Salaire brut : {{salaire}}
+        </p>
+        <p ng-show="montreNet">
+          Salaire net : {{ salaireNet }}
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+</body>
+</html>

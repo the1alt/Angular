@@ -32,11 +32,11 @@
           <h3>Gestion des utilisateurs</h3>
           <hr/>
           <ul style="margin:5px auto">
-            <!-- track by $index -->
+            <!-- LimitTo filtre le nombre d'éléments a afficher -->
             <li ng-repeat="user in users | triMajeur:afficheMajeur | filtreVille:triVille track by $index" style="border-bottom:1px solid #EEE; margin:5px auto;list-style-type:none;padding:10px" >
               <div class="row text-center">
 
-                <div class="col-md-2"><img ng-src="{{ user.avatar }}" alt="{{ user.avatar }}" width="100%" class="img-responsive img-circle"/> </div>
+                <div class="col-md-1"><img ng-src="{{ user.avatar }}" alt="{{ user.avatar }}" width="100%" class="img-responsive img-circle"/> </div>
                 <div class="col-md-2">{{ user.nom }}</div>
                 <div class="col-md-2">{{ user.prenom }}</div>
                 <div class="col-md-1">{{ user.age }}</div>

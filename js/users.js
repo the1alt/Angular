@@ -70,7 +70,8 @@
           prenom: 'Thibaut',
           age: 29,
           ville: 'Lyon',
-          sexe: true
+          sexe: true,
+          sports:['Baseball','Handball']
         },
         {
           avatar: 'https://cdn3.iconfinder.com/data/icons/rcons-user-action/32/boy-512.png',
@@ -78,7 +79,8 @@
           prenom: 'Marc',
           age: 39,
           ville: 'Paris',
-          sexe: true
+          sexe: true,
+          sports:['Foot', 'Basket', 'Handball']
         },
         {
           avatar: 'http://s1.ticketm.net/tm/en-us/dam/a/464/a0f4b7ae-b7c5-458d-8336-396ce71ae464_203561_CUSTOM.jpg',
@@ -86,7 +88,8 @@
           prenom: 'Justine',
           age: 20,
           ville: 'New-york',
-          sexe: false
+          sexe: false,
+          sports:['fapping']
         },
         {
           avatar: 'https://cdn3.iconfinder.com/data/icons/rcons-user-action/32/boy-512.png',
@@ -94,7 +97,8 @@
           prenom: 'martine',
           age: 52,
           ville: 'Madrid',
-          sexe: false
+          sexe: false,
+          sports:['Foot', 'Basket', 'Baseball']
         },
       ];
 

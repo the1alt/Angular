@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Angular</title>
+  <link rel="stylesheet" href="app/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="app/angularjs-slider/dist/rzslider.min.css" media="screen" title="no title">
+  <style media="screen">
+    .text-gold{
+      color:black;
+      background:#FFD700;
+    }
+    body{
+      background-color:rgba(28, 136, 187, 0.55);
+    }
+  </style>
+    <!--JQUERY-->
+  <script src="app/jquery/dist/jquery.min.js" charset="utf-8"></script>
+    <!--BOOTSTRAP-->
+  <script src="app/bootstrap/dist/js/bootstrap.min.js" charset="utf-8"></script>
+    <!--ANGULAR-->
+  <script src="app/angular/angular.min.js" charset="utf-8"></script>
+    <!--Script-->
+  <script src="js/users.js" charset="utf-8"></script>
+</head>
+  <body ng-app="appUsers" ng-cloack>
+    <section ng-controller="UsersCtrl" >
+      <div class="row">
+        <div class="col-md-6 text-center" >
+          <h3>Gestion des utilisateurs</h3>
+          <hr/>
+          <ul style="margin:5px auto">
+            <!-- track by $index -->
+            <li ng-repeat="user in users | triMajeur:afficheMajeur | filtreVille:triVille track by $index" style="border-bottom:1px solid #EEE; margin:5px auto;list-style-type:none;padding:10px" >
+              <div class="row text-center">
+
+                <div class="col-md-2"><img ng-src="{{ user.avatar }}" alt="{{ user.avatar }}" width="100%" class="img-responsive img-circle"/> </div>
+                <div class="col-md-2">{{ user.nom }}</div>
+                <div class="col-md-2">{{ user.prenom }}</div>
+                <div class="col-md-1">{{ user.age }}</div>
+                <div class="col-md-2">{{ user.sexe ? 'Homme' : 'Femme'}}</div>
+                <div class="col-md-2 text-center">{{ user.ville }}</div>
+
+                <div class="col-md-1">
+                  <button type="button" class="btn btn-danger btn-xs glyphicon glyphicon-remove" name="button" ng-click='suppUser($index)'></button>
+                </div>
+
+              </div>
+            </li>
+          </ul>
+          <div class="row">
+            <div class="col-md-12">
+              Trier par age :
+              <select ng-change="typeTriAge()" ng-model="reverse" ng-options="(item?'décroissant':'croissant') for item in [true, false]" id="triAge" style="margin:20px 0;">
+              </select>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-md-12">
+                <input type="checkbox" name="afficheMajeur" id="afficheMajeur" ng-model="afficheMajeur"><label for="afficheMajeur">Afficher uniquement les personnes majeures</label>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-12">
+                <input type="radio" value="paris" name="triVille" ng-model="triVille" id="paris">
+                <label for="paris">Paris</label>
+
+                <input type="radio" value="Lyon" name="triVille" ng-model="triVille" id="lyon">
+                <label for="lyon">Lyon</label>
+
+                <input type="radio" value="marseille" name="triVille" ng-model="triVille" id="marseille">
+                <label for="marseille">Marseille</label>
+
+                <input type="radio" value="villes" name="triVille" ng-model="triVille" id="villes">
+                <label for="villes">Toutes les villes</label>
+              </div>
+          </div>
+
+        </div>
+        <div class="col-md-6 text-center">
+          <h3>Ajouter un utilisateur</h3>
+          <hr />
+          <form ng-submit="ajouterUser()">
+            <div class="form-group col-md-8 col-md-offset-2">
+              <input class="form-control" type="text" name="nom" ng-model="nom" placeholder="Votre nom">
+            </div>
+
+            <div class="form-group col-md-8 col-md-offset-2">
+              <input class="form-control" type="text" name="prenom" ng-model="prenom" placeholder="Votre prénom">
+            </div>
+
+            <div class="form-group col-md-8 col-md-offset-2">
+              <input class="form-control" type="text" name="avatar" ng-model="avatar" placeholder="Votre avatar">
+            </div>
+
+            <div class="form-group col-md-8 col-md-offset-2">
+              <input class="form-control" type="text" name="age" ng-model="age" placeholder="Votre age">
+            </div>
+
+            <div class="form-group col-md-8 col-md-offset-2">
+              <input class="form-control" type="text" name="ville" ng-model="ville" placeholder="Votre ville">
+            </div>
+
+            <div class="form-group col-md-8 col-md-offset-2">
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="radio" value="true" name="sexe" ng-model="sexe" id="sexeTrue">
+                  <label for="sexeTrue">Homme</label>
+                </div>
+                <div class="col-md-6">
+                  <input type="radio" value="false" name="sexe" ng-model="sexe" id="sexeFalse">
+                  <label for="sexeFalse">Femme</label>
+                </div>
+              </div>
+
+
+            </div>
+
+            <button type="submit" class="btn btn-default" name="button">Enregistrer cet utilisateur</button>
+          </form>
+
+        </div>
+
+
+      </div>
+
+
+
+
+
+    </section>
+
+  </body>
+</html>

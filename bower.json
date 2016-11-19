@@ -18,6 +18,7 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "angular": "^1.5.8",
-    "angularjs-slider": "^5.8.7"
+    "angularjs-slider": "^5.8.7",
+    "ngmap": "^1.17.8"
   }
 }

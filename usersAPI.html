@@ -7,6 +7,7 @@
   <title>Angular</title>
   <link rel="stylesheet" href="app/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="app/angularjs-slider/dist/rzslider.min.css" media="screen" title="no title">
+  <script src="app/ngmap/build/scripts/ng-map.min.js"></script>
   <style media="screen">
     .text-gold{
       color:black;
@@ -24,10 +25,10 @@
   <script src="app/angular/angular.min.js" charset="utf-8"></script>
     <!--ANGULAR JS SLIDER-->
   <script src="app/angularjs-slider/dist/rzslider.min.js" charset="utf-8"></script>
-  <!-- Google Map -->
-  <script src="http://maps.google.com/maps/api/js?key=AIzaSyBU0qM8Nt7ZqQDVVDWRum4zF7KOpVOM8k8"></script>
     <!-- NG MAP -->
   <script src="app/ngmap/build/scripts/ng-map.min.js"></script>
+    <!-- Google Map -->
+  <script src="http://maps.google.com/maps/api/js?key=AIzaSyBU0qM8Nt7ZqQDVVDWRum4zF7KOpVOM8k8"></script>
     <!--Script-->
   <script src="js/users.js" charset="utf-8"></script>
 </head>
@@ -140,27 +141,16 @@
             <div class="form-group col-md-8 col-md-offset-2">
               <div class="row">
                 <div class="col-md-6">
-                  <input type="radio" ng-value="true" name="sexe" ng-model="sexe" id="sexeTrue">
+                  <input type="radio" value="true" name="sexe" ng-model="sexe" id="sexeTrue">
                   <label for="sexeTrue">Homme</label>
                 </div>
                 <div class="col-md-6">
-                  <input type="radio" ng-value="false" name="sexe" ng-model="sexe" id="sexeFalse">
+                  <input type="radio" value="false" name="sexe" ng-model="sexe" id="sexeFalse">
                   <label for="sexeFalse">Femme</label>
                 </div>
               </div>
-            </div>
-            <div class="form-group col-md-8 col-md-offset-2">
-              <p>Quels sports pratiquez-vous ?</p>
-              <div class="row">
-                <input type="checkbox" ng-model="checkSport.foot" value="foot" id="foot" name="foot"><label for="foot">Foot</label>
-                <input type="checkbox" ng-model="checkSport.basket" value="Basket" id="Basket" name="Basket"><label for="Basket">Basket</label>
-                <input type="checkbox" ng-model="checkSport.baseball" value="Baseball" id="Baseball" name="Baseball"><label for="Baseball">Baseball</label>
-              </div>
-              <div class="row">
-                <input type="checkbox" ng-model="checkSport.rugby" value="Rugby" id="Rugby" name="Rugby"><label for="Rugby">Rugby</label>
-                <input type="checkbox" ng-model="checkSport.handball" value="Handball" id="Handball" name="Handball"><label for="Handball">Handball</label>
-                <input type="checkbox" ng-model="checkSport.fapping" value="Fapping" id="Fapping" name="Fapping"><label for="Fapping">Fapping</label>
-              </div>
+
+
             </div>
 
             <button type="submit" class="btn btn-default" name="button">Enregistrer cet utilisateur</button>

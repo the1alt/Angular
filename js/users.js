@@ -79,6 +79,10 @@
       $scope.afficheMajeur = false;
       $scope.triVille = "villes";
       $scope.triSport = "tous";
+      $scope.sexe=null;
+      $scope.sports=[];
+
+
 
       $scope.users = [
         {
@@ -213,8 +217,31 @@
         }
       ];
 
+      var length = $scope.users.length;
+
+
+      $scope.slider = {
+        value: $scope.nbrAfficheUser,
+        options: {
+          floor: 0,
+          ceil: $scope.users.length,
+          onChange: function(id,value){
+            $scope.nbrAfficheUser = value;
+          }
+        }
+      };
+
       $scope.ajouterUser = function(){
-        console.log("Ajouter user");
+
+        //récupération des checkbox sport et display array
+        angular.forEach($scope.checkSport, function(value, key){
+          $scope.sports.push(key);
+        });
+        if($scope.sports.length===0){
+          $scope.sports = [""];
+        }
+
+        //injection des values
         $scope.users.push({
           avatar: $scope.avatar,
           nom: $scope.nom,
@@ -222,18 +249,29 @@
           age: $scope.age,
           ville: $scope.ville,
           sexe: $scope.sexe,
+          sports: $scope.sports
         });
+
+        //réinitialisation des values
         $scope.avatar = "";
         $scope.nom = "";
         $scope.prenom = "";
         $scope.age = "";
         $scope.ville = "";
-        $scope.sexe = "";
+        $scope.sexe = null;
+        $scope.sports = "";
+        $scope.checkSport= [];
+
 
         if ($scope.filtre === true) {
           $scope.typeTriAge();
         }
-
+        length += 1;
+        //augmentation du max du range slider
+        $scope.maxAfficheUser = length;
+        $scope.nbrAfficheUser = length;
+        console.log("max :" + length);
+        console.log("value :" + length);
 
       };
 
@@ -250,18 +288,7 @@
 
       };
 
-      $scope.nbrAfficheUser = 10;
 
-      $scope.slider = {
-        value: $scope.nbrAfficheUser,
-        options: {
-          floor: 0,
-          ceil: 10,
-          onChange: function(id,value){
-            $scope.nbrAfficheUser = value;
-          }
-        }
-      };
 $scope.lat = 46.6795944656402;
 $scope.lng = 2.43896484375;
 $scope.zoom = 5;

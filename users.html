@@ -31,7 +31,21 @@
         <div class="col-md-6 text-center" >
           <h3>Gestion des utilisateurs</h3>
           <hr/>
-          <ul style="margin:5px auto">
+          <table class="table table-stripped">
+            <thead>
+              <tr>
+                <th>Avatar</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Age</th>
+                <th>Sexe</th>
+                <th>Ville</th>
+                <th>Sport</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
             <!-- LimitTo filtre le nombre d'éléments a afficher -->
             <li ng-repeat="user in users | triMajeur:afficheMajeur | filtreVille:triVille track by $index" style="border-bottom:1px solid #EEE; margin:5px auto;list-style-type:none;padding:10px" >
               <div class="row text-center">

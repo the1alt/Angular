@@ -32,139 +32,146 @@
   <script src="js/users.js" charset="utf-8"></script>
 </head>
   <body ng-app="appUsers" ng-cloack>
-    <section ng-controller="UsersCtrl" >
-      <div class="row">
-        <div class="col-md-7 text-center" >
-          <h3>Gestion des utilisateurs</h3>
-          <hr/>
-          <div class="row">
-            <div class="col-md-12">
-              Trier par age :
-              <select ng-change="typeTriAge()" ng-model="reverse" ng-options="(item?'décroissant':'croissant') for item in [true, false]" id="triAge" style="margin:20px 0;">
+    <div class="container">
+      <section ng-controller="UsersCtrl" >
+        <div class="row">
+          <div class="col-md-4 text-center">
+            <h3>Ajouter un utilisateur</h3>
+            <hr />
+            <form ng-submit="ajouterUser()">
+              <div class="form-group col-md-8 col-md-offset-2">
+                <input class="form-control" type="text" name="nom" ng-model="nom" placeholder="Votre nom">
+              </div>
+
+              <div class="form-group col-md-8 col-md-offset-2">
+                <input class="form-control" type="text" name="prenom" ng-model="prenom" placeholder="Votre prénom">
+              </div>
+
+              <div class="form-group col-md-8 col-md-offset-2">
+                <input class="form-control" type="text" name="avatar" ng-model="avatar" placeholder="Votre avatar">
+              </div>
+
+              <div class="form-group col-md-8 col-md-offset-2">
+                <input class="form-control" type="text" name="age" ng-model="age" placeholder="Votre age">
+              </div>
+
+              <div class="form-group col-md-8 col-md-offset-2">
+                <input class="form-control" type="text" name="ville" ng-model="ville" placeholder="Votre ville">
+              </div>
+
+              <div class="form-group col-md-8 col-md-offset-2">
+                <div class="row">
+                  <div class="col-md-6">
+                    <input type="radio" ng-value="true" name="sexe" ng-model="sexe" id="sexeTrue">
+                    <label for="sexeTrue">Homme</label>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="radio" ng-value="false" name="sexe" ng-model="sexe" id="sexeFalse">
+                    <label for="sexeFalse">Femme</label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-8 col-md-offset-2">
+                <p>Quels sports pratiquez-vous ?</p>
+                <div class="row">
+                  <input type="checkbox" ng-model="checkSport.foot" value="foot" id="foot" name="foot"><label for="foot">Foot</label>
+                  <input type="checkbox" ng-model="checkSport.basket" value="Basket" id="Basket" name="Basket"><label for="Basket">Basket</label>
+                  <input type="checkbox" ng-model="checkSport.baseball" value="Baseball" id="Baseball" name="Baseball"><label for="Baseball">Baseball</label>
+                </div>
+                <div class="row">
+                  <input type="checkbox" ng-model="checkSport.rugby" value="Rugby" id="Rugby" name="Rugby"><label for="Rugby">Rugby</label>
+                  <input type="checkbox" ng-model="checkSport.handball" value="Handball" id="Handball" name="Handball"><label for="Handball">Handball</label>
+                  <input type="checkbox" ng-model="checkSport.fapping" value="Fapping" id="Fapping" name="Fapping"><label for="Fapping">Fapping</label>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-default" name="button">Enregistrer cet utilisateur</button>
+            </form>
+
+            <h3>Gestion des filtres</h3>
+            <hr/>
+            <div class="row">
+              <div class="col-md-12">
+                Trier par age :
+                <select ng-change="typeTriAge()" ng-model="reverse" ng-options="(item?'décroissant':'croissant') for item in [true, false]" id="triAge" style="margin:20px 0;">
+                </select>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                  <input type="checkbox" name="afficheMajeur" id="afficheMajeur" ng-model="afficheMajeur"><label for="afficheMajeur">Afficher uniquement les personnes majeures</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                  <input type="radio" value="paris" name="triVille" ng-model="triVille" id="paris">
+                  <label for="paris">Paris</label>
+
+                  <input type="radio" value="Lyon" name="triVille" ng-model="triVille" id="lyon">
+                  <label for="lyon">Lyon</label>
+
+                  <input type="radio" value="marseille" name="triVille" ng-model="triVille" id="marseille">
+                  <label for="marseille">Marseille</label>
+
+                  <input type="radio" value="villes" name="triVille" ng-model="triVille" id="villes">
+                  <label for="villes">Toutes les villes</label>
+                </div>
+            </div>
+            <div class="row">
+              Trier par sport : <select name="triSport" id="triSport" ng-model="triSport">
+                <option value="Foot">Foot</option>
+                <option value="Basket">Basket</option>
+                <option value="Baseball">Baseball</option>
+                <option value="Rugby">Rugby</option>
+                <option value="Handball">Handball</option>
+                <option value="Fapping">Fapping</option>
+                <option value="tous">Tous les sports</option>
               </select>
             </div>
-          </div>
-          <div class="row">
+            <div class="row">
               <div class="col-md-12">
-                <input type="checkbox" name="afficheMajeur" id="afficheMajeur" ng-model="afficheMajeur"><label for="afficheMajeur">Afficher uniquement les personnes majeures</label>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-md-12">
-                <input type="radio" value="paris" name="triVille" ng-model="triVille" id="paris">
-                <label for="paris">Paris</label>
-
-                <input type="radio" value="Lyon" name="triVille" ng-model="triVille" id="lyon">
-                <label for="lyon">Lyon</label>
-
-                <input type="radio" value="marseille" name="triVille" ng-model="triVille" id="marseille">
-                <label for="marseille">Marseille</label>
-
-                <input type="radio" value="villes" name="triVille" ng-model="triVille" id="villes">
-                <label for="villes">Toutes les villes</label>
-              </div>
-          </div>
-          <div class="row">
-            Trier par sport : <select name="triSport" id="triSport" ng-model="triSport">
-              <option value="Foot">Foot</option>
-              <option value="Basket">Basket</option>
-              <option value="Baseball">Baseball</option>
-              <option value="Rugby">Rugby</option>
-              <option value="Handball">Handball</option>
-              <option value="Fapping">Fapping</option>
-              <option value="tous">Tous les sports</option>
-            </select>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options"></rzslider>
-            </div>
-          </div>
-          <div class="row">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Avatar</th>
-                  <th>Nom</th>
-                  <th>Prénom</th>
-                  <th>Age</th>
-                  <th>Sexe</th>
-                  <th>Ville</th>
-                  <th>Sport</th>
-                  <th>Afficher sur la carte</th>
-                  <th>Supprimer</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="user in users | triMajeur:afficheMajeur | filtreVille:triVille | filtreSport:triSport | limitTo:nbrAfficheUser track by $index">
-                  <td><img ng-src="{{ user.avatar }}" alt="{{ user.avatar }}" width="50px"/></td>
-                  <td>{{ user.nom }}</td>
-                  <td>{{ user.prenom }}</td>
-                  <td>{{ user.age }}</td>
-                  <td>{{ user.sexe ? 'Homme' : 'Femme'}}</td>
-                  <td>{{ user.ville }}</td>
-                  <td><p ng-repeat="sport in user.sports">{{sport}}</p>
-                  </td>
-                  <td><button type="button" class="btn btn-primary btn xs glyphicon glyphicon-map-marker" ng-click="afficheCarte($index)"></button></td>
-                  <td><button type="button" class="btn btn-danger btn-xs glyphicon glyphicon-remove" name="button" ng-click='suppUser($index)'></button></td>
-                </tr>
-              </tbody>
-              <!-- LimitTo filtre le nombre d'éléments a afficher -->
-            </table>
-          </div>
-        </div>
-        <div class="col-md-5 text-center">
-          <h3>Ajouter un utilisateur</h3>
-          <hr />
-          <form ng-submit="ajouterUser()">
-            <div class="form-group col-md-8 col-md-offset-2">
-              <input class="form-control" type="text" name="nom" ng-model="nom" placeholder="Votre nom">
-            </div>
-
-            <div class="form-group col-md-8 col-md-offset-2">
-              <input class="form-control" type="text" name="prenom" ng-model="prenom" placeholder="Votre prénom">
-            </div>
-
-            <div class="form-group col-md-8 col-md-offset-2">
-              <input class="form-control" type="text" name="avatar" ng-model="avatar" placeholder="Votre avatar">
-            </div>
-
-            <div class="form-group col-md-8 col-md-offset-2">
-              <input class="form-control" type="text" name="age" ng-model="age" placeholder="Votre age">
-            </div>
-
-            <div class="form-group col-md-8 col-md-offset-2">
-              <input class="form-control" type="text" name="ville" ng-model="ville" placeholder="Votre ville">
-            </div>
-
-            <div class="form-group col-md-8 col-md-offset-2">
-              <div class="row">
-                <div class="col-md-6">
-                  <input type="radio" ng-value="true" name="sexe" ng-model="sexe" id="sexeTrue">
-                  <label for="sexeTrue">Homme</label>
-                </div>
-                <div class="col-md-6">
-                  <input type="radio" ng-value="false" name="sexe" ng-model="sexe" id="sexeFalse">
-                  <label for="sexeFalse">Femme</label>
-                </div>
-              </div>
-            </div>
-            <div class="form-group col-md-8 col-md-offset-2">
-              <p>Quels sports pratiquez-vous ?</p>
-              <div class="row">
-                <input type="checkbox" ng-model="checkSport.foot" value="foot" id="foot" name="foot"><label for="foot">Foot</label>
-                <input type="checkbox" ng-model="checkSport.basket" value="Basket" id="Basket" name="Basket"><label for="Basket">Basket</label>
-                <input type="checkbox" ng-model="checkSport.baseball" value="Baseball" id="Baseball" name="Baseball"><label for="Baseball">Baseball</label>
-              </div>
-              <div class="row">
-                <input type="checkbox" ng-model="checkSport.rugby" value="Rugby" id="Rugby" name="Rugby"><label for="Rugby">Rugby</label>
-                <input type="checkbox" ng-model="checkSport.handball" value="Handball" id="Handball" name="Handball"><label for="Handball">Handball</label>
-                <input type="checkbox" ng-model="checkSport.fapping" value="Fapping" id="Fapping" name="Fapping"><label for="Fapping">Fapping</label>
+                <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options"></rzslider>
               </div>
             </div>
 
-            <button type="submit" class="btn btn-default" name="button">Enregistrer cet utilisateur</button>
-          </form>
+          </div>
+
+          <div class="col-md-7 col-md-offset-1 text-center" >
+            <h3>Gestion des utilisateurs</h3>
+            <hr/>
+            <div class="row">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Avatar</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Age</th>
+                    <th>Sexe</th>
+                    <th>Ville</th>
+                    <th>Sport</th>
+                    <th>Afficher sur la carte</th>
+                    <th>Supprimer</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="user in users | triMajeur:afficheMajeur | filtreVille:triVille | filtreSport:triSport | limitTo:nbrAfficheUser track by $index">
+                    <td><img ng-src="{{ user.avatar }}" alt="{{ user.avatar }}" width="50px"/></td>
+                    <td>{{ user.nom }}</td>
+                    <td>{{ user.prenom }}</td>
+                    <td>{{ user.age }}</td>
+                    <td>{{ user.sexe ? 'Homme' : 'Femme'}}</td>
+                    <td>{{ user.ville }}</td>
+                    <td><p ng-repeat="sport in user.sports">{{sport}}</p>
+                    </td>
+                    <td><button type="button" class="btn btn-primary btn xs glyphicon glyphicon-map-marker" ng-click="afficheCarte($index)"></button></td>
+                    <td><button type="button" class="btn btn-danger btn-xs glyphicon glyphicon-remove" name="button" ng-click='suppUser($index)'></button></td>
+                  </tr>
+                </tbody>
+                <!-- LimitTo filtre le nombre d'éléments a afficher -->
+              </table>
+            </div>
+          </div>
 
         </div>
         <div class="row">
@@ -175,13 +182,9 @@
           </div>
         </div>
 
-      </div>
+      </section>
+    </div>
 
-
-
-
-
-    </section>
 
   </body>
 </html>

@@ -221,7 +221,7 @@
 
 
       $scope.slider = {
-        value: $scope.nbrAfficheUser,
+        value: $scope.users.length,
         options: {
           floor: 0,
           ceil: $scope.users.length,
@@ -268,11 +268,8 @@
         }
         length += 1;
         //augmentation du max du range slider
-        $scope.maxAfficheUser = length;
-        $scope.nbrAfficheUser = length;
-        console.log("max :" + length);
-        console.log("value :" + length);
-
+        $scope.slider.options.ceil += 1;
+        $scope.slider.value += 1;
       };
 
       $scope.suppUser = function(id){

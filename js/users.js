@@ -217,7 +217,6 @@
         }
       ];
 
-      var length = $scope.users.length;
 
 
       $scope.slider = {
@@ -269,7 +268,9 @@
         length += 1;
         //augmentation du max du range slider
         $scope.slider.options.ceil += 1;
-        $scope.slider.value += 1;
+        if($scope.slider.value == $scope.slider.options.ceil){
+          $scope.slider.value += 1;
+        }
       };
 
       $scope.suppUser = function(id){

@@ -21,11 +21,11 @@ var ngmin = require('gulp-ngmin');
 
 // task browser-sync qui permet de configurer au lancement browser-sync
 gulp.task('browser-sync', function() {
-    browserSync({
+    browserSync({ 
         port: 3000,
         server: {
             baseDir: "./", //base
-            index: "users.html", //fichier a chargé
+            index: "usersAPI.html", //fichier a chargé
         }
     });
 });

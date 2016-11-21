@@ -1,0 +1,38 @@
+body{
+  background:url('http://www.thedarklodge.fr/wp-content/uploads/2014/05/background-metal.jpg')center top repeat;
+
+}
+.row{
+  display:block;
+  overflow:hidden;
+  -webkit-transition: all 0.2s linear;
+	-moz-transition: all 0.2s linear;
+	-ms-transition: all 0.2s linear;
+	-o-transition: all 0.2s linear;
+	transition: all 0.2s linear;
+}
+.map{
+  margin:20px auto;
+  background: #484444;
+  border-radius: 5px;
+  float: none;
+  overflow: hidden;
+  padding: 4px;
+  -webkit-transition: all 0.2s linear;
+	-moz-transition: all 0.2s linear;
+	-ms-transition: all 0.2s linear;
+	-o-transition: all 0.2s linear;
+	transition: all 0.2s linear;
+}
+.mapClose{
+  opacity:0;
+  transform:scaleY(0);
+  transform-origin: center;
+  height:0;
+}
+.mapOpen{
+  opacity: 1;
+  height:308px;
+  transform: scaleY(1);
+  transform-origin: center;
+}

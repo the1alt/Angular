@@ -118,7 +118,7 @@
           age: 20,
           ville: 'Lyon',
           sexe: false,
-          sports:['fapping'],
+          sports:['Coding'],
           coords: {
             latitude : 45.750000,
             longitude : 4.850000,
@@ -157,7 +157,7 @@
           age: 20,
           ville: 'Paris',
           sexe: false,
-          sports:['fapping'],
+          sports:['Coding'],
           coords: {
             latitude : 48.866667,
             longitude : 2.333333,
@@ -196,7 +196,7 @@
           age: 20,
           ville: 'Lyon',
           sexe: false,
-          sports:['fapping'],
+          sports:['Coding'],
           coords: {
             latitude : 45.750000,
             longitude : 4.850000,

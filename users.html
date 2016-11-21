@@ -81,7 +81,7 @@
                 <div class="row">
                   <input type="checkbox" ng-model="checkSport.rugby" value="Rugby" id="Rugby" name="Rugby"><label for="Rugby">Rugby</label>
                   <input type="checkbox" ng-model="checkSport.handball" value="Handball" id="Handball" name="Handball"><label for="Handball">Handball</label>
-                  <input type="checkbox" ng-model="checkSport.fapping" value="Fapping" id="Fapping" name="Fapping"><label for="Fapping">Fapping</label>
+                  <input type="checkbox" ng-model="checkSport.coding" value="coding" id="coding" name="coding"><label for="coding">Coding</label>
                 </div>
               </div>
 
@@ -124,7 +124,7 @@
                 <option value="Baseball">Baseball</option>
                 <option value="Rugby">Rugby</option>
                 <option value="Handball">Handball</option>
-                <option value="Fapping">Fapping</option>
+                <option value="Coding">Coding</option>
                 <option value="tous">Tous les sports</option>
               </select>
             </div>
@@ -177,7 +177,7 @@
         <div class="row">
           <div class="col-md-6 col-md-offset-3">
             <div map-lazy-load="https://maps.google.com/maps/api/js">
-              <ng-map center="{{ lat }},{{ lng }}" zoom="{{ zoom }}" max-zoom="12" min-zoom="5"><marker position="{{ lat }},{{ lng }}" title="Hello World!"></marker></ng-map>
+              <ng-map center="lat,lng" zoom="zoom" max-zoom="12" min-zoom="5"><marker position="lat,lng" title="Hello World!"></marker></ng-map>
             </div>
           </div>
         </div>

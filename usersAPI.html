@@ -7,16 +7,9 @@
   <title>Angular</title>
   <link rel="stylesheet" href="app/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="app/angularjs-slider/dist/rzslider.min.css" media="screen" title="no title">
-  <script src="app/ngmap/build/scripts/ng-map.min.js"></script>
-  <style media="screen">
-    .text-gold{
-      color:black;
-      background:#FFD700;
-    }
-    body{
-      background-color:rgba(28, 136, 187, 0.55);
-    }
-  </style>
+  <link rel="stylesheet" href="css/animate.css" media="screen" title="no title">
+  <link rel="stylesheet" href="css/main.css" media="screen" title="no title">
+
     <!--JQUERY-->
   <script src="app/jquery/dist/jquery.min.js" charset="utf-8"></script>
     <!--BOOTSTRAP-->
@@ -25,153 +18,94 @@
   <script src="app/angular/angular.min.js" charset="utf-8"></script>
     <!--ANGULAR JS SLIDER-->
   <script src="app/angularjs-slider/dist/rzslider.min.js" charset="utf-8"></script>
+  <!-- Google Map -->
+  <script src="http://maps.google.com/maps/api/js?key=AIzaSyBU0qM8Nt7ZqQDVVDWRum4zF7KOpVOM8k8"></script>
     <!-- NG MAP -->
   <script src="app/ngmap/build/scripts/ng-map.min.js"></script>
-    <!-- Google Map -->
-  <script src="http://maps.google.com/maps/api/js?key=AIzaSyBU0qM8Nt7ZqQDVVDWRum4zF7KOpVOM8k8"></script>
     <!--Script-->
-  <script src="js/users.js" charset="utf-8"></script>
+  <script src="js/usersAPI.js" charset="utf-8"></script>
 </head>
-  <body ng-app="appUsers" ng-cloack>
-    <section ng-controller="UsersCtrl" >
-      <div class="row">
-        <div class="col-md-7 text-center" >
-          <h3>Gestion des utilisateurs</h3>
-          <hr/>
-          <div class="row">
-            <div class="col-md-12">
-              Trier par age :
-              <select ng-change="typeTriAge()" ng-model="reverse" ng-options="(item?'décroissant':'croissant') for item in [true, false]" id="triAge" style="margin:20px 0;">
-              </select>
+  <body ng-app="appUsers" id="body">
+    <div class="container">
+      <section ng-controller="UsersCtrl" >
+
+        <div class="row">
+
+          <div class="container">
+            <h3>Gestion des agents</h3>
+            <hr/>
+            <div class="row">
+                Afficher les agents présents dans :
+                <select name="affichePosition" ng-model="affichePosition">
+                  <option value="tous">les deux émisphères</option>
+                  <option value="Nord">l'émisphère nord</option>
+                  <option value="Sud">l'émisphère sud</option>
+                </select>
+                <button type="button" ng-click="mapShow()" name="button" class="btn btn-danger btn-xs"><span ng-if="showMap === false">Afficher la map</span><span ng-if="showMap === true">Masquer la map</span></button>
+
             </div>
-          </div>
-          <div class="row">
-              <div class="col-md-12">
-                <input type="checkbox" name="afficheMajeur" id="afficheMajeur" ng-model="afficheMajeur"><label for="afficheMajeur">Afficher uniquement les personnes majeures</label>
+
+            <div class="col-md-8 map mapClose" >
+              <!-- <div map-lazy-load="https://maps.google.com/maps/api/js"> -->
+                <ng-map default-style="true" center="[{{ lat }},{{ lng }}]" zoom="{{ zoom }}" max-zoom="12" min-zoom="1">
+                  <marker id="{{user.id}}" ng-repeat="user in users| triPosition:affichePosition track by $index" on-click="showDetail(user)" position="{{ user.address.geo.lat }}, {{ user.address.geo.lng }}" title="{{ user.name }}"></marker>
+
+                  <info-window id="foo-iw">
+                    <div ng-non-bindable="">
+                      id: {{ user.id }}<br/>
+                      name: {{ user.name}}<br/>
+                      Position : {{ user.address.suite}},<br/>
+                      {{ user.address.street }} street,<br/>
+                      {{ user.address.zipcode }} {{ user.address.city }}<br/>
+                      <a href="#" ng-click="clicked()">Click Here</a>
+                    </div>
+                  </info-window>
+                </ng-map>
               </div>
-          </div>
-          <div class="row">
-              <div class="col-md-12">
-                <input type="radio" value="paris" name="triVille" ng-model="triVille" id="paris">
-                <label for="paris">Paris</label>
-
-                <input type="radio" value="Lyon" name="triVille" ng-model="triVille" id="lyon">
-                <label for="lyon">Lyon</label>
-
-                <input type="radio" value="marseille" name="triVille" ng-model="triVille" id="marseille">
-                <label for="marseille">Marseille</label>
-
-                <input type="radio" value="villes" name="triVille" ng-model="triVille" id="villes">
-                <label for="villes">Toutes les villes</label>
-              </div>
-          </div>
-          <div class="row">
-            Trier par sport : <select name="triSport" id="triSport" ng-model="triSport">
-              <option value="Foot">Foot</option>
-              <option value="Basket">Basket</option>
-              <option value="Baseball">Baseball</option>
-              <option value="Rugby">Rugby</option>
-              <option value="Handball">Handball</option>
-              <option value="Fapping">Fapping</option>
-              <option value="tous">Tous les sports</option>
-            </select>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <rzslider rz-slider-model="slider.value" rz-slider-options="slider.options"></rzslider>
+            </div>
+            <div class="row">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th class="text-center">Agent</th>
+                    <th class="text-center">Nom</th>
+                    <th class="text-center">Surnom</th>
+                    <th class="text-center">Immatriculation</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Site</th>
+                    <th class="text-center">Planque</th>
+                    <th class="text-center">Afficher sur la carte</th>
+                    <th class="text-center">Supprimer</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- | triMajeur:afficheMajeur | filtreVille:triVille | filtreSport:triSport | limitTo:nbrAfficheUser -->
+                  <tr ng-repeat="user in users | triPosition:affichePosition track by $index">
+                    <td class="text-center" ng-if="user.id < 10">00{{ user.id }}</td>
+                    <td class="text-center" ng-if="user.id >= 10">0{{ user.id }}</td>
+                    <td class="text-center">{{ user.name }}</td>
+                    <td class="text-center">{{ user.username }}</td>
+                    <td class="text-center">{{ user.phone }}</td>
+                    <td class="text-center">{{ user.email }}</td>
+                    <td class="text-center"><a href="{{ user.website }}">{{ user.website }}</a> </td>
+                    <td class="text-center"><p>{{ user.address.suite }}, {{ user.address.street }} street, {{ user.address.zipcode }} {{ user.address.city }}</p>
+                    </td>
+                    <td class="text-center"><button type="button" class="btn btn-primary btn xs glyphicon glyphicon-map-marker" ng-click="afficheCarte($index)"></button></td>
+                    <td class="text-center"><button type="button" class="btn btn-danger btn-xs glyphicon glyphicon-remove" name="button" ng-click='suppUser($index)'></button></td>
+                  </tr>
+                </tbody>
+                <!-- LimitTo filtre le nombre d'éléments a afficher -->
+              </table>
             </div>
           </div>
-          <div class="row">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Avatar</th>
-                  <th>Nom</th>
-                  <th>Prénom</th>
-                  <th>Age</th>
-                  <th>Sexe</th>
-                  <th>Ville</th>
-                  <th>Sport</th>
-                  <th>Afficher sur la carte</th>
-                  <th>Supprimer</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="user in users | triMajeur:afficheMajeur | filtreVille:triVille | filtreSport:triSport | limitTo:nbrAfficheUser track by $index">
-                  <td><img ng-src="{{ user.avatar }}" alt="{{ user.avatar }}" width="50px"/></td>
-                  <td>{{ user.nom }}</td>
-                  <td>{{ user.prenom }}</td>
-                  <td>{{ user.age }}</td>
-                  <td>{{ user.sexe ? 'Homme' : 'Femme'}}</td>
-                  <td>{{ user.ville }}</td>
-                  <td><p ng-repeat="sport in user.sports">{{sport}}</p>
-                  </td>
-                  <td><button type="button" class="btn btn-primary btn xs glyphicon glyphicon-map-marker" ng-click="afficheCarte($index)"></button></td>
-                  <td><button type="button" class="btn btn-danger btn-xs glyphicon glyphicon-remove" name="button" ng-click='suppUser($index)'></button></td>
-                </tr>
-              </tbody>
-              <!-- LimitTo filtre le nombre d'éléments a afficher -->
-            </table>
-          </div>
-        </div>
-        <div class="col-md-5 text-center">
-          <h3>Ajouter un utilisateur</h3>
-          <hr />
-          <form ng-submit="ajouterUser()">
-            <div class="form-group col-md-8 col-md-offset-2">
-              <input class="form-control" type="text" name="nom" ng-model="nom" placeholder="Votre nom">
-            </div>
-
-            <div class="form-group col-md-8 col-md-offset-2">
-              <input class="form-control" type="text" name="prenom" ng-model="prenom" placeholder="Votre prénom">
-            </div>
-
-            <div class="form-group col-md-8 col-md-offset-2">
-              <input class="form-control" type="text" name="avatar" ng-model="avatar" placeholder="Votre avatar">
-            </div>
-
-            <div class="form-group col-md-8 col-md-offset-2">
-              <input class="form-control" type="text" name="age" ng-model="age" placeholder="Votre age">
-            </div>
-
-            <div class="form-group col-md-8 col-md-offset-2">
-              <input class="form-control" type="text" name="ville" ng-model="ville" placeholder="Votre ville">
-            </div>
-
-            <div class="form-group col-md-8 col-md-offset-2">
-              <div class="row">
-                <div class="col-md-6">
-                  <input type="radio" value="true" name="sexe" ng-model="sexe" id="sexeTrue">
-                  <label for="sexeTrue">Homme</label>
-                </div>
-                <div class="col-md-6">
-                  <input type="radio" value="false" name="sexe" ng-model="sexe" id="sexeFalse">
-                  <label for="sexeFalse">Femme</label>
-                </div>
-              </div>
-
-
-            </div>
-
-            <button type="submit" class="btn btn-default" name="button">Enregistrer cet utilisateur</button>
-          </form>
-
         </div>
         <div class="row">
-          <div class="col-md-6 col-md-offset-3">
-            <div map-lazy-load="https://maps.google.com/maps/api/js">
-              <ng-map center="{{ lat }},{{ lng }}" zoom="{{ zoom }}" max-zoom="12" min-zoom="5"><marker position="{{ lat }},{{ lng }}" title="Hello World!"></marker></ng-map>
-            </div>
-          </div>
+
         </div>
 
-      </div>
+      </section>
+    </div>
 
-
-
-
-
-    </section>
 
   </body>
 </html>

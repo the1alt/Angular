@@ -3,37 +3,28 @@
     "use strict";
 
     angular.module('appUsers', ['rzModule', 'ngMap'])
-              .filter('triAge', function(){
-                return function(ageFilter, reverse){
-                    ageFilter.sort(function (a, b) {
-                      if(a.age > b.age){
-                        return 1;
-                      }else if(a.age < b.age){
-                        return -1;
-                      }else{
-                        return 0;
+              .filter('triPosition', function(){
+                return function(users, affichePosition){
+                  var el = [];
+                  if (users) {
+                    users.forEach(function(a){
+                      if (affichePosition === "Nord") {
+                        if(a.address.geo.lat > 0){
+                            console.log("nord");
+                            el.push(a);
+                        }
+                      }
+                      else if(affichePosition === "Sud"){
+                        if(a.address.geo.lat < 0){
+                            el.push(a);
+                        }
+                      }
+                      else{
+                        el = users;
                       }
                     });
-                    if(reverse === true){
-                      ageFilter = ageFilter.reverse();
-                    }
-                    return ageFilter;
-                };
-              })
-              .filter('triMajeur', function(){
-                return function(ageFilter, afficheMajeur){
-                  var el = [];
-                  ageFilter.forEach(function(a){
-                    if(afficheMajeur === true){
-                      if(a.age >= 18){
-                        el.push(a);
-                      }
-                    }
-                    else{
-                      el = ageFilter;
-                    }
-                  });
-                  return el;
+                    return el;
+                  }
                 };
               })
               .filter('filtreVille', function(){
@@ -73,7 +64,7 @@
     function UsersCtrl($scope, $filter, NgMap, $http){
       console.log("Controlleur chargé");
 
-      // //Initialisation de variables pour le filtre
+      //Initialisation de variables pour le filtre
       // $scope.reverse=null;
       // $scope.filtre = false;
       // $scope.afficheMajeur = false;
@@ -81,14 +72,58 @@
       // $scope.triSport = "tous";
       // $scope.sexe=null;
       // $scope.sports=[];
+      NgMap.getMap().then(function(map) {
+        console.log('map', map);
+        $scope.map = map;
+      });
+
+      $scope.affichePosition = "tous";
+      $scope.showMap = false;
+
+      $scope.mapShow = function(){
+        $scope.showMap = !$scope.showMap;
+
+        if($scope.showMap === true){
+          angular.element(document.querySelector('.map')).removeClass("mapClose").addClass('mapOpen');
+        }else{
+          angular.element(document.querySelector('.map')).removeClass('mapOpen').addClass('mapClose');
+        }
+      };
+
+      $http.get("https://jsonplaceholder.typicode.com/users").
+      success(function(data) {
+      	$scope.users = data;
+        $scope.users.forEach(function(a){
+          a.position = [a.address.geo.lat,a.address.geo.lng];
+        });
+      }).
+
+      error(function(data) {
+      	document.getElementById("erreur").innerHTML = "Erreur lors de l'appel du json";
+      });
 
 
-    $http({method: 'GET', url: 'https://jsonplaceholder.typicode.com/users'})
-      .success(function(data) {
-    $scope.users = data;
-  }).error (function (data) {
-    $scope.users = data || 'Request failed';
-  });
+      $scope.lat = 0;
+      $scope.lng = 2.43896484375;
+      $scope.zoom = 1;
+
+      $scope.afficheCarte = function(id){
+        $scope.lat = $scope.users[id].address.geo.lat;
+        $scope.lng = $scope.users[id].address.geo.lng;
+        // $scope.users(id);
+        NgMap.getMap().then(function(map) {
+          console.log(map.getCenter());
+          console.log('markers', map.markers);
+          console.log('shapes', map.shapes);
+        });
+      };
+
+      $scope.showDetail = function(e, user) {
+        console.log(e, user);
+        $scope.user = user;
+        $scope.map.showInfoWindow('foo-iw', user.id);
+      };
+
 
 
 //
@@ -146,11 +181,11 @@
 //         }
 //       };
 //
-      $scope.suppUser = function(id){
-
-        $scope.users.splice(id,1);
-
-      };
+//       $scope.suppUser = function(id){
+//
+//         $scope.users.splice(id,1);
+//
+//       };
 //
 //       $scope.typeTriAge = function(){
 //
@@ -160,26 +195,9 @@
 //       };
 //
 //
-      $scope.lat = 46.6795944656402;
-      $scope.lng = 2.43896484375;
-      $scope.zoom = 5;
 
-      $scope.afficheCarte = function(id){
-        console.log(id);
-        $scope.lat = parseInt($scope.users[id].address.geo.lat);
-        $scope.lng = parseInt($scope.users[id].address.geo.lng);
-        console.log($scope.lat);
-        console.log($scope.lng);
-        $scope.zoom = 8;
-        // $scope.users(id);
-        NgMap.getMap().then(function(map) {
-          console.log(map.getCenter());
-          console.log('markers', map.markers);
-          console.log('shapes', map.shapes);
-        });
-      };
     }//End controller
-//
-//
+
+
 
 }());
